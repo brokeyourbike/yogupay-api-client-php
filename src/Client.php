@@ -8,18 +8,17 @@ namespace BrokeYourBike\YoguPay;
 
 use Psr\SimpleCache\CacheInterface;
 use GuzzleHttp\ClientInterface;
-use BrokeYourBike\YoguPay\Responses\TransferResponse;
 use BrokeYourBike\YoguPay\Responses\TokenResponse;
+use BrokeYourBike\YoguPay\Responses\PayoutResponse;
+use BrokeYourBike\YoguPay\Responses\EstimateResponse;
 use BrokeYourBike\YoguPay\Interfaces\TransactionInterface;
 use BrokeYourBike\YoguPay\Interfaces\ConfigInterface;
-use BrokeYourBike\YoguPay\Enums\SourceOfFundsEnum;
-use BrokeYourBike\YoguPay\Enums\SenderTypeEnum;
-use BrokeYourBike\YoguPay\Enums\RemitancePurposeEnum;
+use BrokeYourBike\YoguPay\Enums\CollectionNetworkEnum;
+use BrokeYourBike\YoguPay\Enums\ChannelEnum;
 use BrokeYourBike\ResolveUri\ResolveUriTrait;
 use BrokeYourBike\HttpEnums\HttpMethodEnum;
 use BrokeYourBike\HttpClient\HttpClientTrait;
 use BrokeYourBike\HttpClient\HttpClientInterface;
-use BrokeYourBike\HasSourceModel\SourceModelInterface;
 use BrokeYourBike\HasSourceModel\HasSourceModelTrait;
 
 /**
@@ -82,9 +81,70 @@ class Client implements HttpClientInterface
             ],
         ];
 
-        $url = rtrim($this->config->getUrl(), '/') . '/auth/login';
+        $response = $this->httpClient->request(
+            HttpMethodEnum::POST->value,
+            (string) $this->resolveUriFor(rtrim($this->config->getUrl(), '/'), '/auth/login'),
+            $options
+        );
 
-        $response = $this->httpClient->request(HttpMethodEnum::POST->value, $url, $options);
         return new TokenResponse($response);
+    }
+
+    public function estimate(string $from, string $to, float $amount): EstimateResponse
+    {
+        $options = [
+            \GuzzleHttp\RequestOptions::HEADERS => [
+                'Accept' => 'application/json',
+                'token' => $this->getAuthToken(),
+            ],
+            \GuzzleHttp\RequestOptions::JSON => [
+                'currency_pair' => "{$from}_{$to}",
+                'amount' => $amount,
+            ],
+        ];
+
+        $response = $this->httpClient->request(
+            HttpMethodEnum::POST->value,
+            (string) $this->resolveUriFor(rtrim($this->config->getUrl(), '/'), '/api/get-estimate'),
+            $options
+        );
+
+        return new EstimateResponse($response);
+    }
+
+    public function payout(TransactionInterface $transaction): PayoutResponse
+    {
+        $network = match ($transaction->getChannel()) {
+            ChannelEnum::MOBILE_MONEY => CollectionNetworkEnum::MPESA_DIRECT,
+            ChannelEnum::BANK_TRANSFER => CollectionNetworkEnum::BANK_TRANSFER,
+        };
+
+        $options = [
+            \GuzzleHttp\RequestOptions::HEADERS => [
+                'Accept' => 'application/json',
+                'token' => $this->getAuthToken(),
+            ],
+            \GuzzleHttp\RequestOptions::JSON => [
+                'channel' => $transaction->getChannel()->value,
+                'collection_network' => $network->value,
+                'dest_currency' => $transaction->getCurrency(),
+                'dest_amount' => $transaction->getAmount(),
+                'country_code' => $transaction->getRecipientCountry(),
+                'recipient_name' => $transaction->getRecipientName(),
+                'bank_code' => $transaction->getRecipientBankCode(),
+                'bank_account_number' => $transaction->getRecipientAccountNumber(),
+                'msisdn' => $transaction->getRecipientPhone(),
+                'recipient_email' => $transaction->getRecipientEmail(),
+                'purpose_of_funds' => $transaction->getPurpose(),
+            ],
+        ];
+
+        $response = $this->httpClient->request(
+            HttpMethodEnum::POST->value,
+            (string) $this->resolveUriFor(rtrim($this->config->getUrl(), '/'), '/auth/payout'),
+            $options
+        );
+
+        return new PayoutResponse($response);
     }
 }

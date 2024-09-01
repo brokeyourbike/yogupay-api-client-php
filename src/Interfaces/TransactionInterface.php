@@ -20,6 +20,7 @@ interface TransactionInterface
     public function getCurrency(): string;
     public function getAmount(): float;
     public function getChannel(): ChannelEnum;
+    public function getPurpose(): string;
 
     public function getRecipientCountry(): string;
     public function getRecipientName(): string;

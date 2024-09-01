@@ -11,10 +11,9 @@ use BrokeYourBike\DataTransferObject\JsonResponse;
 /**
  * @author Ivan Stasiuk <ivan@stasi.uk>
  */
-class TransferResponse extends JsonResponse
+class EstimateResponse extends JsonResponse
 {
     public ?string $status;
     public ?string $message;
-    public ?string $trx_code;
 }
 

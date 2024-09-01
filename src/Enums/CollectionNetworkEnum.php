@@ -9,9 +9,9 @@ namespace BrokeYourBike\YoguPay\Enums;
 /**
  * @author Ivan Stasiuk <ivan@stasi.uk>
  */
-enum ErrorCodeEnum: string
+enum CollectionNetworkEnum: string
 {
-    case FAIL = '0';
-    case SUCCESS = '1';
-    case UNAVAILABLE = '-3';
+    case MPESA_DIRECT = 'MPESADIRECT';
+    case BANK_TRANSFER = 'BANKTRANSFER';
+    case TRANSFER_NG = 'TRANSFER_NG';
 }
