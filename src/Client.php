@@ -116,7 +116,10 @@ class Client implements HttpClientInterface
     {
         $network = match ($transaction->getChannel()) {
             ChannelEnum::MOBILE_MONEY => CollectionNetworkEnum::MPESA_DIRECT,
-            ChannelEnum::BANK_TRANSFER => CollectionNetworkEnum::BANK_TRANSFER,
+            ChannelEnum::BANK_TRANSFER => match ($transaction->getCurrency()) {
+                'NGN' => CollectionNetworkEnum::TRANSFER_NG,
+                default => CollectionNetworkEnum::BANK_TRANSFER,
+            },
         };
 
         $options = [
@@ -127,8 +130,8 @@ class Client implements HttpClientInterface
             \GuzzleHttp\RequestOptions::JSON => [
                 'channel' => $transaction->getChannel()->value,
                 'collection_network' => $network->value,
-                'dest_currency' => $transaction->getCurrency(),
-                'dest_amount' => $transaction->getAmount(),
+                'source_currency' => $transaction->getCurrency(),
+                'source_amount' => $transaction->getAmount(),
                 'country_code' => $transaction->getRecipientCountry(),
                 'recipient_name' => $transaction->getRecipientName(),
                 'bank_code' => $transaction->getRecipientBankCode(),
@@ -136,6 +139,7 @@ class Client implements HttpClientInterface
                 'msisdn' => $transaction->getRecipientPhone(),
                 'recipient_email' => $transaction->getRecipientEmail(),
                 'purpose_of_funds' => $transaction->getPurpose(),
+                'payment_reference' => $transaction->getReference(),
             ],
         ];
 
