@@ -13,5 +13,7 @@ enum ErrorCodeEnum: string
 {
     case FAIL = '0';
     case SUCCESS = '1';
+    case NOT_FOUND = '2';
+    case EXCEPTION = '500';
     case UNAVAILABLE = '-3';
 }
