@@ -8,6 +8,7 @@ namespace BrokeYourBike\YoguPay;
 
 use Psr\SimpleCache\CacheInterface;
 use GuzzleHttp\ClientInterface;
+use BrokeYourBike\YoguPay\Responses\TransactionResponse;
 use BrokeYourBike\YoguPay\Responses\TokenResponse;
 use BrokeYourBike\YoguPay\Responses\PayoutResponse;
 use BrokeYourBike\YoguPay\Responses\EstimateResponse;
@@ -150,5 +151,26 @@ class Client implements HttpClientInterface
         );
 
         return new PayoutResponse($response);
+    }
+
+    public function viewTransaction(string $transactionCode): TransactionResponse
+    {
+        $options = [
+            \GuzzleHttp\RequestOptions::HEADERS => [
+                'Accept' => 'application/json',
+                'token' => $this->getAuthToken(),
+            ],
+            \GuzzleHttp\RequestOptions::JSON => [
+                'trx_code' => $transactionCode,
+            ],
+        ];
+
+        $response = $this->httpClient->request(
+            HttpMethodEnum::POST->value,
+            (string) $this->resolveUriFor(rtrim($this->config->getUrl(), '/'), '/auth/view-transaction'),
+            $options
+        );
+
+        return new TransactionResponse($response);
     }
 }
