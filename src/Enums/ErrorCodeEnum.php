@@ -15,5 +15,6 @@ enum ErrorCodeEnum: string
     case SUCCESS = '1';
     case NOT_FOUND = '2';
     case EXCEPTION = '500';
+    case INSUFFICIENT_FUNDS = '-2';
     case UNAVAILABLE = '-3';
 }
