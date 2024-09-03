@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.1.1](https://www.github.com/brokeyourbike/yogupay-api-client-php/compare/v0.1.0...v0.1.1) (2024-09-03)
+
+
+### Bug Fixes
+
+* purpose can be null ([419c52c](https://www.github.com/brokeyourbike/yogupay-api-client-php/commit/419c52c85c91b435207ee9f80b375ae66f54767e))
+
 ## 0.1.0 (2024-09-03)
 
 
