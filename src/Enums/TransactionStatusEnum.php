@@ -11,6 +11,8 @@ namespace BrokeYourBike\YoguPay\Enums;
  */
 enum TransactionStatusEnum: string
 {
-    case INITIATED = '2';
+    case PENDING_FUNDS = '0';
+    case PENDING_REMITTANCE = '1';
+    case SUCCESS = '2';
     case FAIL = '4';
 }

@@ -6,9 +6,6 @@
 
 namespace BrokeYourBike\YoguPay\Interfaces;
 
-use DateTime;
-use BrokeYourBike\YoguPay\Enums\SegmentEnum;
-use BrokeYourBike\YoguPay\Enums\DestinationEnum;
 use BrokeYourBike\YoguPay\Enums\ChannelEnum;
 
 /**
