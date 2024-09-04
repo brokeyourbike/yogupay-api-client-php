@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.2.0](https://www.github.com/brokeyourbike/yogupay-api-client-php/compare/v0.1.2...v0.2.0) (2024-09-04)
+
+
+### Features
+
+* more enums ([87a0a54](https://www.github.com/brokeyourbike/yogupay-api-client-php/commit/87a0a549e9bb804a95adcb10575c777c78e6f322))
+
+
+### Bug Fixes
+
+* parse status response ([fac7fc2](https://www.github.com/brokeyourbike/yogupay-api-client-php/commit/fac7fc2e3cc2ffbd6a060dc575dab6a1cdb92e98))
+
 ### [0.1.2](https://www.github.com/brokeyourbike/yogupay-api-client-php/compare/v0.1.1...v0.1.2) (2024-09-03)
 
 
