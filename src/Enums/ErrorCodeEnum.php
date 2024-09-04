@@ -14,6 +14,7 @@ enum ErrorCodeEnum: string
     case FAIL = '0';
     case SUCCESS = '1';
     case NOT_FOUND = '2';
+    case BAD_REQUEST = '400';
     case EXCEPTION = '500';
     case INSUFFICIENT_FUNDS = '-2';
     case UNAVAILABLE = '-3';

@@ -6,6 +6,7 @@
 
 namespace BrokeYourBike\YoguPay\Responses;
 
+use Spatie\DataTransferObject\DataTransferObject;
 use BrokeYourBike\DataTransferObject\JsonResponse;
 
 /**
@@ -18,7 +19,7 @@ class TransactionResponse extends JsonResponse
     public ?TransactionItem $transaction;
 }
 
-class TransactionItem
+class TransactionItem extends DataTransferObject
 {
     public int $id;
     public string $transaction_code;
