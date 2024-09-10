@@ -161,7 +161,7 @@ class Client implements HttpClientInterface
                 'token' => $this->getAuthToken(),
             ],
             \GuzzleHttp\RequestOptions::JSON => [
-                'trx_code' => $transactionCode,
+                'transaction_code' => $transactionCode,
             ],
         ];
 
