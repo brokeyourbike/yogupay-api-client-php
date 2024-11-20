@@ -116,7 +116,10 @@ class Client implements HttpClientInterface
     public function payout(TransactionInterface $transaction): PayoutResponse
     {
         $network = match ($transaction->getChannel()) {
-            ChannelEnum::MOBILE_MONEY => CollectionNetworkEnum::MPESA_DIRECT,
+            ChannelEnum::MOBILE_MONEY => match ($transaction->getCurrency()) {
+                'KES' => CollectionNetworkEnum::MPESA_DIRECT,
+                default => null,
+            },
             ChannelEnum::BANK_TRANSFER => match ($transaction->getCurrency()) {
                 'NGN' => CollectionNetworkEnum::TRANSFER_NG,
                 default => CollectionNetworkEnum::BANK_TRANSFER,
@@ -130,7 +133,7 @@ class Client implements HttpClientInterface
             ],
             \GuzzleHttp\RequestOptions::JSON => [
                 'channel' => $transaction->getChannel()->value,
-                'collection_network' => $network->value,
+                'collection_network' => $network?->value,
                 'source_currency' => $transaction->getCurrency(),
                 'source_amount' => $transaction->getAmount(),
                 'country_code' => $transaction->getRecipientCountry(),
