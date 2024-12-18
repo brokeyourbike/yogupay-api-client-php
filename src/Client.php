@@ -20,6 +20,7 @@ use BrokeYourBike\ResolveUri\ResolveUriTrait;
 use BrokeYourBike\HttpEnums\HttpMethodEnum;
 use BrokeYourBike\HttpClient\HttpClientTrait;
 use BrokeYourBike\HttpClient\HttpClientInterface;
+use BrokeYourBike\HasSourceModel\SourceModelInterface;
 use BrokeYourBike\HasSourceModel\HasSourceModelTrait;
 
 /**
@@ -146,6 +147,10 @@ class Client implements HttpClientInterface
                 'payment_reference' => $transaction->getReference(),
             ],
         ];
+
+        if ($transaction instanceof SourceModelInterface){
+            $options[\BrokeYourBike\HasSourceModel\Enums\RequestOptions::SOURCE_MODEL] = $transaction;
+        }
 
         $response = $this->httpClient->request(
             HttpMethodEnum::POST->value,
