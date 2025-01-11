@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.3.2](https://www.github.com/brokeyourbike/yogupay-api-client-php/compare/v0.3.1...v0.3.2) (2025-01-11)
+
+
+### Miscellaneous Chores
+
+* **deps-dev:** bump nesbot/carbon from 2.72.5 to 2.72.6 ([b2c4cf2](https://www.github.com/brokeyourbike/yogupay-api-client-php/commit/b2c4cf20b5e632247c2e8dedb558115e246e217c))
+
 ### [0.3.1](https://www.github.com/brokeyourbike/yogupay-api-client-php/compare/v0.3.0...v0.3.1) (2024-12-18)
 
 
