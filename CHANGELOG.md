@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.3.3](https://www.github.com/brokeyourbike/yogupay-api-client-php/compare/v0.3.2...v0.3.3) (2025-06-05)
+
+
+### Bug Fixes
+
+* fallback ([6429057](https://www.github.com/brokeyourbike/yogupay-api-client-php/commit/64290571c3c7cd37887d7883d90be0f9bfd55d16))
+
 ### [0.3.2](https://www.github.com/brokeyourbike/yogupay-api-client-php/compare/v0.3.1...v0.3.2) (2025-01-11)
 
 
