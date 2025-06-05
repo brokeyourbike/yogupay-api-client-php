@@ -13,5 +13,6 @@ enum CollectionNetworkEnum: string
 {
     case MPESA_DIRECT = 'MPESADIRECT';
     case BANK_TRANSFER = 'BANKTRANSFER';
+    case MOBILE_MONEY = 'MOBILEMONEY';
     case TRANSFER_NG = 'TRANSFER_NG';
 }

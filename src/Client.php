@@ -119,7 +119,7 @@ class Client implements HttpClientInterface
         $network = match ($transaction->getChannel()) {
             ChannelEnum::MOBILE_MONEY => match ($transaction->getCurrency()) {
                 'KES' => CollectionNetworkEnum::MPESA_DIRECT,
-                default => null,
+                default => CollectionNetworkEnum::MOBILE_MONEY,
             },
             ChannelEnum::BANK_TRANSFER => match ($transaction->getCurrency()) {
                 'NGN' => CollectionNetworkEnum::TRANSFER_NG,
