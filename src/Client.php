@@ -83,6 +83,10 @@ class Client implements HttpClientInterface
             ],
         ];
 
+        if ($this->getSourceModel() != null){
+            $options[\BrokeYourBike\HasSourceModel\Enums\RequestOptions::SOURCE_MODEL] = $this->getSourceModel();
+        }
+
         $response = $this->httpClient->request(
             HttpMethodEnum::POST->value,
             (string) $this->resolveUriFor(rtrim($this->config->getUrl(), '/'), '/auth/login'),
@@ -104,6 +108,10 @@ class Client implements HttpClientInterface
                 'amount' => $amount,
             ],
         ];
+
+        if ($this->getSourceModel() != null){
+            $options[\BrokeYourBike\HasSourceModel\Enums\RequestOptions::SOURCE_MODEL] = $this->getSourceModel();
+        }
 
         $response = $this->httpClient->request(
             HttpMethodEnum::POST->value,
@@ -148,8 +156,8 @@ class Client implements HttpClientInterface
             ],
         ];
 
-        if ($transaction instanceof SourceModelInterface){
-            $options[\BrokeYourBike\HasSourceModel\Enums\RequestOptions::SOURCE_MODEL] = $transaction;
+        if ($this->getSourceModel() != null){
+            $options[\BrokeYourBike\HasSourceModel\Enums\RequestOptions::SOURCE_MODEL] = $this->getSourceModel();
         }
 
         $response = $this->httpClient->request(
@@ -172,6 +180,10 @@ class Client implements HttpClientInterface
                 'transaction_code' => $transactionCode,
             ],
         ];
+
+        if ($this->getSourceModel() != null){
+            $options[\BrokeYourBike\HasSourceModel\Enums\RequestOptions::SOURCE_MODEL] = $this->getSourceModel();
+        }
 
         $response = $this->httpClient->request(
             HttpMethodEnum::POST->value,
